@@ -13,10 +13,12 @@
 ## How to use
 - Import sample prefabs.
 - Drop Sample prefab to the scene
+- Setup `GridManager.cs` in inspector
 - For 2D or 3D switch `bool` in inspector at `GridManager.cs`
 - Call `PathFinding.Request_FindPath()` for pathFinding or `ClosestCellsFinding.Request_Cells` for find closest cells
 
 ## How it works
+- `GridManager.cs` create gridNode array with physical checking obstacles by layerMask at `Awake()`
 - You call any system like `PathFinding.Request_FindPath()` with a callback (endpoint)
 - `PathFinding.Request_FindPath()` make request with method for threads and put it to the `RequestManager.cs`
 - `RequestManager.cs` invoke request at threads
