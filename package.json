@@ -1,0 +1,27 @@
+{
+  "name": "com.dimati.pathfindera",
+  "displayName": "A* Path Finder 2D, 3D",
+  "version": "1.0.0",
+  "unity": "2018.4",
+  "unityRelease": "",
+  "description": "A* path finding (2D and 3D) using threads",
+  "author": "DimaTi <timofeenkodima@gmail.com> (https://github.com/dimaTidev)",
+  "keywords": [],
+  "category": "Nested",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/dimaTidev/PathFindingA.git"
+  },
+  "samples": [
+      {
+          "displayName": "Basic Prefabs",
+          "description": "Basic Prefabs",
+          "path": "Samples~/BasicPrefabs"
+      },
+      {
+          "displayName": "Test Scene",
+          "description": "Test Scene",
+          "path": "Samples~/TestScene"
+      }
+  ]
+}
