@@ -17,7 +17,7 @@ namespace DimaTi.PathFinding
             {
                 if (!isSearchingPath && target)
                 {
-                    PathFinding.FindPath_Request(transform.position, target.position, OnPathFound);
+                    PathFinding.Request_FindPath(transform.position, target.position, OnPathFound);
                     isSearchingPath = true;
                 }
                 yield return new WaitForSeconds(updateTime);

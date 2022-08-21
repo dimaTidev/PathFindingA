@@ -43,7 +43,7 @@ namespace DimaTi.PathFinding
 		//----------------------------------------------------------------------------------------------------------------
 		#endregion
 
-		public static void FindPath_Request(Vector3 posStart, Vector3 posEnd, Action<Vector3[], bool> callback)
+		public static void Request_FindPath(Vector3 posStart, Vector3 posEnd, Action<Vector3[], bool> callback)
 		{
 			Request request = new Request(FindPath, posStart, posEnd, callback);
 			RequestManager.RequestPath(request);
