@@ -252,22 +252,29 @@ namespace DimaTi.PathFinding
 
 #if UNITY_EDITOR
 		[Header("__Gizmos__")]
+		[SerializeField] bool gizmos_displayBorder;
 		[SerializeField] bool gizmos_displayGrid;
 		[SerializeField] bool gizmos_displayGridCells;
 		[SerializeField] float gizmos_SphereSize = 1;
 
 		void OnDrawGizmos()
 		{
-			Gizmos_DrawBorder();
-			Gizmos_DrawWalkaleNodes();
-			Gizmos_DrawGrid();
+			
+			if (gizmos_displayGridCells) Gizmos_DrawWalkaleNodes();
+			if (gizmos_displayGrid) Gizmos_DrawGrid();
+			if (gizmos_displayBorder) Gizmos_DrawBorder();
 		}
 
 
-		void Gizmos_DrawBorder() => Gizmos.DrawWireCube(transform.position, gridAxis == GridAxis._2D ? new Vector3(gridWorldSize.x, gridWorldSize.y) : new Vector3(gridWorldSize.x, 0, gridWorldSize.y));
-		void Gizmos_DrawWalkaleNodes()
+        void Gizmos_DrawBorder()
+        {
+			Gizmos.color = Color.white;
+			Gizmos.DrawWireCube(transform.position, gridAxis == GridAxis._2D ? new Vector3(gridWorldSize.x * nodeSize, gridWorldSize.y * nodeSize) : new Vector3(gridWorldSize.x * nodeSize, 0, gridWorldSize.y * nodeSize));
+        }
+
+        void Gizmos_DrawWalkaleNodes()
 		{
-			if (grid != null && gizmos_displayGridCells)
+			if (grid != null)
 			{
 				foreach (Node n in grid)
 				{
@@ -282,33 +289,29 @@ namespace DimaTi.PathFinding
 		}
 		void Gizmos_DrawGrid()
 		{
-			if (gizmos_displayGrid)
+			Gizmos.color = Color.grey;
+
+			Vector3 origin = StartCorner;
+
+			Gizmos.DrawSphere(origin, gizmos_SphereSize);
+
+			if (gridAxis == GridAxis._2D) //2D (vertical)
 			{
-				Gizmos.color = Color.blue;
-
-				Vector3 origin = StartCorner;
-
-				Gizmos.DrawSphere(origin, gizmos_SphereSize);
-
-				if (gridAxis == GridAxis._2D) //2D (vertical)
+				for (int i = 0; i <= gridWorldSize.x; i++)
 				{
-					for (int i = 0; i <= gridWorldSize.x; i++)
-					{
-						Gizmos.DrawLine(origin + new Vector3(i * nodeSize, 0), origin + new Vector3(i * nodeSize, gridWorldSize.y * nodeSize));
-						for (int k = 0; k <= gridWorldSize.y; k++)
-							Gizmos.DrawLine(origin + new Vector3(i * nodeSize, k * nodeSize), origin + new Vector3(gridWorldSize.x * nodeSize, k * nodeSize));
-					}
+					Gizmos.DrawLine(origin + new Vector3(i * nodeSize, 0), origin + new Vector3(i * nodeSize, gridWorldSize.y * nodeSize));
+					for (int k = 0; k <= gridWorldSize.y; k++)
+						Gizmos.DrawLine(origin + new Vector3(i * nodeSize, k * nodeSize), origin + new Vector3(gridWorldSize.x * nodeSize, k * nodeSize));
 				}
-				else if (gridAxis == GridAxis._3D) //3D (horizontal)
+			}
+			else if (gridAxis == GridAxis._3D) //3D (horizontal)
+			{
+				for (int i = 0; i <= gridWorldSize.x; i++)
 				{
-					for (int i = 0; i <= gridWorldSize.x; i++)
-					{
-						Gizmos.DrawLine(origin + new Vector3(i * nodeSize, 0, 0), origin + new Vector3(i * nodeSize, 0, gridWorldSize.y * nodeSize));
-						for (int k = 0; k <= gridWorldSize.y; k++)
-							Gizmos.DrawLine(origin + new Vector3(i * nodeSize, 0, k * nodeSize), origin + new Vector3(gridWorldSize.x * nodeSize, 0, k * nodeSize));
-					}
+					Gizmos.DrawLine(origin + new Vector3(i * nodeSize, 0, 0), origin + new Vector3(i * nodeSize, 0, gridWorldSize.y * nodeSize));
+					for (int k = 0; k <= gridWorldSize.y; k++)
+						Gizmos.DrawLine(origin + new Vector3(i * nodeSize, 0, k * nodeSize), origin + new Vector3(gridWorldSize.x * nodeSize, 0, k * nodeSize));
 				}
-
 			}
 		}
 
